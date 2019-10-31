@@ -4,7 +4,7 @@ using namespace std;
 
 int knapsack(int val[], int wt[], int w, int n)
 {
-	int k[n+1][w+1];
+	int k[n+1][w+1], res;
 	for (int i = 0; i < n + 1; ++i)
 		k[i][0] = 0;	
 	for (int i = 0; i < w + 1; i++)
@@ -17,7 +17,17 @@ int knapsack(int val[], int wt[], int w, int n)
 				k[i][j] = k[i-1][j];
 			else
 				k[i][j] = max(k[i-1][j], val[i-1] + k[i][w-wt[i-1]]);
-			cout<<k[i][j];
+		}
+	}
+	res = k[n][w]; int j = w, i;
+	for (i = n; i > 0 and res > 0; i--)
+	{
+		if (res == k[i-1][j])
+			continue;
+		else {
+			cout<<wt[i-1]<<endl;
+			res -= val[i-1];
+			j -= wt[i-1];
 		}
 	}
 	return k[n][w];
